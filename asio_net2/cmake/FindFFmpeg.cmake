@@ -1,0 +1,46 @@
+
+set(FFMPEG_INCLUDE_DIRS ${FFMPEG_ROOT}/include)
+
+set(FFMPEG_LIBRARIES "")
+foreach(lib IN ITEMS ${FFMPEG_ROOT})
+  list(APPEND FFMPEG_LIBRARIES "${lib}/lib")
+endforeach()
+
+find_path(AVCODEC_INCLUDE_DIR NAMES avcodec.h PATHS ${FFMPEG_INCLUDE_DIRS}/libavcodec)
+find_library(AVCODEC_LIBRARY NAMES avcodec.lib PATHS ${FFMPEG_LIBRARIES})
+
+find_path(AVFORMAT_INCLUDE_DIR NAMES avformat.h PATHS
+  ${FFMPEG_INCLUDE_DIRS}/libavformat
+)
+find_library(AVFORMAT_LIBRARY NAMES avformat.lib PATHS
+  ${FFMPEG_LIBRARIES}
+)
+
+find_path(AVUTIL_INCLUDE_DIR NAMES avutil.h PATHS
+  ${FFMPEG_INCLUDE_DIRS}/libavutil
+)
+find_library(AVUTIL_LIBRARY NAMES avutil.lib PATHS
+  ${FFMPEG_LIBRARIES}
+)
+
+find_path(AVDEVICE_INCLUDE_DIR NAMES avdevice.h PATHS
+  ${FFMPEG_INCLUDE_DIRS}/libavdevice
+)
+find_library(AVDEVICE_LIBRARY NAMES avdevice.lib PATHS
+  ${FFMPEG_LIBRARIES}
+)
+
+find_path(SWSCALE_INCLUDE_DIR NAMES swscale.h PATHS
+  ${FFMPEG_INCLUDE_DIRS}
+)
+find_library(SWSCALE_LIBRARY NAMES swscale.lib PATHS
+  ${FFMPEG_LIBRARIES}
+)
+
+set(FFMPEG_LIBRARIES
+  ${AVCODEC_LIBRARY}
+  ${AVFORMAT_LIBRARY}
+  ${AVUTIL_LIBRARY}
+  ${AVDEVICE_LIBRARY}
+  ${SWSCALE_LIBRARY}
+)
